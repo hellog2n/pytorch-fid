@@ -31,9 +31,9 @@ class InceptionV3(nn.Module):
     def __init__(self,
                  output_blocks=(DEFAULT_BLOCK_INDEX,),
                  resize_input=True,
-                 normalize_input=True,
+                 normalize_input=False,
                  requires_grad=False,
-                 use_fid_inception=True):
+                 use_fid_inception=False):
         """Build pretrained InceptionV3
 
         Parameters
@@ -149,8 +149,8 @@ class InceptionV3(nn.Module):
                               mode='bilinear',
                               align_corners=False)
 
-        if self.normalize_input:
-            x = 2 * x - 1  # Scale from range (0, 1) to range (-1, 1)
+        #if self.normalize_input:
+          #  x = 2 * x - 1  # Scale from range (0, 1) to range (-1, 1)
 
         for idx, block in enumerate(self.blocks):
             x = block(x)

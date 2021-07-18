@@ -38,7 +38,7 @@ from multiprocessing import cpu_count
 
 import numpy as np
 import torch
-import torchvision.transforms as TF
+import torchvision.transforms as transforms
 from PIL import Image
 from scipy import linalg
 from torch.nn.functional import adaptive_avg_pool2d
@@ -114,7 +114,10 @@ def get_activations(files, model, batch_size=50, dims=2048, device='cpu', num_wo
                'Setting batch size to data size'))
         batch_size = len(files)
 
-    dataset = ImagePathDataset(files, transforms=TF.ToTensor())
+    dataset = ImagePathDataset(files, transforms=transforms.Compose([
+                                 transforms.ToTensor(),
+                                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+                             ] ))
     dataloader = torch.utils.data.DataLoader(dataset,
                                              batch_size=batch_size,
                                              shuffle=False,
